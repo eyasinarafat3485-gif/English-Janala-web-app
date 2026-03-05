@@ -25,39 +25,6 @@ const loadLevelWord=(id)=>{
     });
 };
 
-const loadWordDetail= async(id)=>{
-    const url=`https://openapi.programming-hero.com/api/word/${id}`;
-    console.log(url);
-    const res= await fetch(url);
-    const details= await res.json();
-    displayWordDetails(details.data);
-}
-
-// displayWordDetails=(word)=>{
-//    console.log(word);
-//    const detailsContainer= document.getElementById('details-container');
-//    detailsContainer.innerHTML=`<div>
-//                 <h2 class="text-2xl font-bold">${word.word} (<i class="fa-solid fa-microphone-lines"></i>:${word.pronunciation})</h2>
-//                 </div>
-
-//                 <div>
-//                 <h2 class=" font-bold">Meaning</h2>
-//                 <p>${word.meaning}</p>
-//                 </div>
-
-//                 <div>
-//                 <h2 class=" font-bold">Example</h2>
-//                 <p>${word.sentence}</p>
-//                 </div>
-
-//                 <div>
-//                 <h2 class=" font-bold">Synonym</h2>
-//                 <span class="btn"> Syn1</span>
-//                 <span class="btn"> Syn1</span>
-//                 <span class="btn"> Syn1</span>
-//                 </div>`;
-//    document.getElementById('word_modal').showModal();
-// }
 const displayLevelWord=(words)=>{
     // console.log(words);
     const wordContainer=document.getElementById('word-container');
@@ -91,7 +58,7 @@ const displayLevelWord=(words)=>{
             <div class="font-bangla font-semibold text-2xl">"${word.meaning? word.meaning :'meaning is not found'} / ${word.pronunciation? word.pronunciation : 'pronunciation is not found'}"</div>
             <div class="flex justify-between items-center">
 
-                <button onclick="loadWordDetail(${word.id})" class="btn bg-[#1a91ff15] hover:bg-[#1a91ff80] "><i class="fa-solid fa-circle-info"></i></button>
+                <button onclick="my_modal_5.showModal()" class="btn bg-[#1a91ff15] hover:bg-[#1a91ff80] "><i class="fa-solid fa-circle-info"></i></button>
                 <button class="btn bg-[#1a91ff15] hover:bg-[#1a91ff80] "><i class="fa-solid fa-volume-high"></i></button>
             </div>
 
@@ -126,21 +93,3 @@ const displayLesson = (lessons) => {
 };
 
 loadLessons();
-
-document.getElementById('btn-search').addEventListener('click',()=>{
-    removeActive();
-    const input= document.getElementById('input-search');
-    const searchValue= input.value.trim().toLowerCase();
-    console.log(searchValue);
-
-    fetch('https://openapi.programming-hero.com/api/words/all')
-    .then((res)=>res.json())
-    .then((data)=>{
-        const allWords= data.data;
-        console.log(allWords);
-        const filterWords= allWords.filter(word=>word.word.toLowerCase().includes(searchValue));
-        // console.log(filterWords);
-
-        displayLevelWord(filterWords);
-    });
-});
